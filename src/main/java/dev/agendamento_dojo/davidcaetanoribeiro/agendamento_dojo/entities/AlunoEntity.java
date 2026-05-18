@@ -1,0 +1,30 @@
+package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
+@Table(name = "tb_aluno")
+public class AlunoEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "aluno_id")
+    private UUID idAluno;
+
+
+    @Column(name = "data_matricula")
+    private LocalDateTime dataMatricula = LocalDateTime.now();
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private UsuarioEntity usuario;
+
+    @OneToMany(mappedBy = "alunoAgendado")
+    private List<AgendamentoEntity> agendamentosCadastrados = new ArrayList<>();
+
+}
