@@ -2,6 +2,10 @@ package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities;
 
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.RoleUser;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +13,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tb_usuario")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UsuarioEntity {
 
     @Id

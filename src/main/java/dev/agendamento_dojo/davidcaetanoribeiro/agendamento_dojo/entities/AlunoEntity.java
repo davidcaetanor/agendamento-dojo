@@ -1,6 +1,10 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,6 +13,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tb_aluno")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AlunoEntity {
 
     @Id

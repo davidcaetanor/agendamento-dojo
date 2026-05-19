@@ -1,12 +1,20 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 
 @Entity
 @Table(name = "tb_aula")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AulaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
