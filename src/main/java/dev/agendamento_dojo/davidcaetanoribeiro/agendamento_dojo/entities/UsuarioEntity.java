@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -30,7 +28,7 @@ public class UsuarioEntity {
     @Column(name = "nome_usuario", nullable = false)
     private String nomeUsuario;
 
-    @Column(name = "email_usuario", unique = true)
+    @Column(name = "email_usuario", unique = true, nullable = false)
     private String emailUsuario;
 
     @Column(name = "senha_usuario", nullable = false)
@@ -41,5 +39,4 @@ public class UsuarioEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role_user")
     private Set<RoleUser> roleUsers = new HashSet<>();
-
 }
