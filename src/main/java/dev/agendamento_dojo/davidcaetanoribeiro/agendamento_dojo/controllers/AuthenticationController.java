@@ -5,6 +5,8 @@ import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.Usua
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.UsuarioLoginOutputDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.UsuarioRegisterOutputDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.services.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Rota de autenticacao", description = "Registro e autenticacao do usuario")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
@@ -23,6 +26,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Local de Registro do usuario",
+            description = "O usuario informa seus dados e após o registro recebe um JSON com nome e email")
     public ResponseEntity<UsuarioRegisterOutputDto> registrarUsuario(@Valid @RequestBody UsuarioRegisterInputDto registerDto) {
         authenticationService.registrar(registerDto);
         var outputDto = new UsuarioRegisterOutputDto(registerDto.emailUsuario(), registerDto.nomeUsuario());
@@ -30,6 +35,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Local de Autenticacao do usuario",
+            description = "O usuario efetua login, mediante aos dados válidos ele recebe um JSON com o token e o tipo dele")
     public ResponseEntity<UsuarioLoginOutputDto> login(@Valid @RequestBody UsuarioLoginInputDto loginDto) {
         String token = authenticationService.autenticar(loginDto);
         var outputDto = new UsuarioLoginOutputDto(token, "Bearer");
