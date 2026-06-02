@@ -3,12 +3,14 @@ package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.services;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.UsuarioLoginInputDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.UsuarioRegisterInputDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.UsuarioEntity;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.event.UsuarioRegistradoEvent;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.exceptions.RegistrarUsuarioException;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.mappers.UsuarioRegisterMapper;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.repositories.UsuarioRepository;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.security.TokenService;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,13 +23,15 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public AuthenticationService(UsuarioRepository usuarioRepository, UsuarioRegisterMapper usuarioRegisterMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AuthenticationService(UsuarioRepository usuarioRepository, UsuarioRegisterMapper usuarioRegisterMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService, ApplicationEventPublisher eventPublisher) {
         this.usuarioRepository = usuarioRepository;
         this.usuarioRegisterMapper = usuarioRegisterMapper;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Transactional
@@ -42,7 +46,9 @@ public class AuthenticationService {
 
         usuarioNovo.setSenhaUsuario(senhaBCrypt);
 
-        usuarioRepository.save(usuarioNovo);
+        UsuarioEntity usuarioSalvo = usuarioRepository.save(usuarioNovo);
+
+        eventPublisher.publishEvent(new UsuarioRegistradoEvent(usuarioSalvo));
     }
 
     public String autenticar(UsuarioLoginInputDto loginDto) {
