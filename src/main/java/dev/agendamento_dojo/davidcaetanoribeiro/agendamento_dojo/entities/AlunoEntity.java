@@ -26,7 +26,7 @@ public class AlunoEntity {
 
 
     @Column(name = "data_matricula")
-    private LocalDateTime dataMatricula = LocalDateTime.now();
+    private LocalDateTime dataMatricula;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false)
