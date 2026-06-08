@@ -37,7 +37,7 @@ public class AuthenticationService {
     @Transactional
     public void registrar(UsuarioRegisterInputDto registerDto) {
         if (usuarioRepository.existsByEmailUsuario(registerDto.emailUsuario())) {
-            throw new RegistrarUsuarioException("E!");
+            throw new RegistrarUsuarioException("Este email não está disponível. Tente novamente com um e-mail diferente!");
         }
 
         UsuarioEntity usuarioNovo = usuarioRegisterMapper.toEntity(registerDto);

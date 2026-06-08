@@ -19,31 +19,21 @@ public class TokenService {
     private String secret;
 
     public String gerarToken(String emailUsuario) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
+        Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            return JWT.create().withIssuer("agendamento-dojo")
-                    .withSubject(emailUsuario)
-                    .withExpiresAt(dataExpiracao())
-                    .sign(algorithm);
-
-        } catch (JWTCreationException e) {
-            throw new JWTCreationException("Erro ao criar o Token!", e);
-        }
+        return JWT.create().withIssuer("agendamento-dojo")
+                .withSubject(emailUsuario)
+                .withExpiresAt(dataExpiracao())
+                .sign(algorithm);
     }
 
     public String validarToken(String token) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
+        Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            return JWT.require(algorithm).withIssuer("agendamento-dojo")
-                    .build()
-                    .verify(token)
-                    .getSubject();
-
-        } catch (JWTVerificationException e) {
-            return "";
-        }
+        return JWT.require(algorithm).withIssuer("agendamento-dojo")
+                .build()
+                .verify(token)
+                .getSubject();
     }
 
     private Instant dataExpiracao() {
