@@ -1,5 +1,6 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities;
 
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.vo.EnderecoVO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,5 +35,8 @@ public class AlunoEntity {
 
     @OneToMany(mappedBy = "alunoAgendado")
     private List<AgendamentoEntity> agendamentosCadastrados = new ArrayList<>();
+
+    @Embedded
+    private EnderecoVO endereco;
 
 }

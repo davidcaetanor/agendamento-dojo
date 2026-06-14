@@ -1,0 +1,1 @@
+ALTER TABLE tb_aluno ADD COLUMN endereco_unidade VARCHAR(100);
