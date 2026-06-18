@@ -29,4 +29,4 @@ API desenvolvida para o gerenciamento de matrículas, aulas e agendamentos de um
 
 Com a aplicação em execução, a documentação fica disponível no navegador através do endereço:
 
-`http://localhost:8081/swagger-ui.html`
+`http://localhost:8080/swagger-ui.html`
