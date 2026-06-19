@@ -68,8 +68,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CepNaoEncontradoException.class)
     public ResponseEntity<HttpErrorMessageDto> handleCepNaoEncontradoException(CepNaoEncontradoException e) {
         HttpErrorMessageDto errorResponse = new HttpErrorMessageDto(
-                HttpStatus.BAD_REQUEST, "Cep inválido!", LocalDateTime.now()
+                HttpStatus.NOT_FOUND, "Não foi encontrado nenhum registro associado a este CEP!", LocalDateTime.now()
         );
         return ResponseEntity.status(errorResponse.status()).body(errorResponse);
     }
+
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    public ResponseEntity<HttpErrorMessageDto> handlerUsuarioNaoEncontradoException(UsuarioNaoEncontradoException e) {
+        HttpErrorMessageDto errorResponse = new HttpErrorMessageDto(HttpStatus.NOT_FOUND, e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(errorResponse.status()).body(errorResponse);
+    }
+
 }
