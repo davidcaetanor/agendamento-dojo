@@ -3,6 +3,7 @@ package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.services;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.UsuarioLoginInputDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.UsuarioRegisterInputDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.UsuarioEntity;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.RoleUser;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.event.UsuarioRegistradoEvent;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.exceptions.RegistrarUsuarioException;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.mappers.UsuarioRegisterMapper;
@@ -15,6 +16,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.Set;
 
 @Service
 public class AuthenticationService {
@@ -46,9 +50,11 @@ public class AuthenticationService {
 
         usuarioNovo.setSenhaUsuario(senhaBCrypt);
 
+        usuarioNovo.setRoleUsers(Set.of(RoleUser.ALUNO));
+
         UsuarioEntity usuarioSalvo = usuarioRepository.save(usuarioNovo);
 
-        eventPublisher.publishEvent(new UsuarioRegistradoEvent(usuarioSalvo));
+        eventPublisher.publishEvent(new UsuarioRegistradoEvent(usuarioSalvo.getIdUsuario()));
     }
 
     public String autenticar(UsuarioLoginInputDto loginDto) {

@@ -4,6 +4,7 @@ import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.clients.ViaCepC
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.AtualizarEnderecoInputDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.EnderecoViaCepDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.AlunoEntity;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.UsuarioEntity;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.vo.EnderecoVO;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.RoleUser;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.event.UsuarioRegistradoEvent;
@@ -23,18 +24,22 @@ public class AlunoService {
     private final AlunoRepository alunoRepository;
     private final ViaCepClient viaCep;
     private final EnderecoMapper enderecoMapper;
+    private final UsuarioService usuarioService;
 
-    public AlunoService(AlunoRepository alunoRepository, ViaCepClient viaCep, EnderecoMapper enderecoMapper) {
+    public AlunoService(AlunoRepository alunoRepository, ViaCepClient viaCep, EnderecoMapper enderecoMapper, UsuarioService usuarioService) {
         this.alunoRepository = alunoRepository;
         this.viaCep = viaCep;
         this.enderecoMapper = enderecoMapper;
+        this.usuarioService = usuarioService;
     }
 
     @EventListener
+    @Transactional
     public void criarAluno(UsuarioRegistradoEvent usuarioEvent) {
-        if (usuarioEvent.usuario().getRoleUsers().contains(RoleUser.ALUNO)) {
+        UsuarioEntity usuarioEncontrado = usuarioService.buscarPorId(usuarioEvent.idUsuario());
+        if (usuarioEncontrado != null && usuarioEncontrado.getRoleUsers().contains(RoleUser.ALUNO)) {
             AlunoEntity aluno = new AlunoEntity();
-            aluno.setUsuario(usuarioEvent.usuario());
+            aluno.setUsuario(usuarioEncontrado);
             aluno.setDataMatricula(LocalDateTime.now());
             alunoRepository.save(aluno);
         }

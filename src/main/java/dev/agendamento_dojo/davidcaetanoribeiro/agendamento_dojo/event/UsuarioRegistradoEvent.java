@@ -1,6 +1,6 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.event;
 
-import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.UsuarioEntity;
+import java.util.UUID;
 
-public record UsuarioRegistradoEvent(UsuarioEntity usuario) {
+public record UsuarioRegistradoEvent(UUID idUsuario) {
 }
