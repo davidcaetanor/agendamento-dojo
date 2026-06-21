@@ -1,4 +1,4 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output;
 
-public record UsuarioLoginOutputDto(String token, String tipo) {
+public record UsuarioLoginResponseDto(String token, String tipo) {
 }

@@ -1,9 +1,9 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.controllers;
 
-import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.UsuarioLoginInputDto;
-import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.UsuarioRegisterInputDto;
-import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.UsuarioLoginOutputDto;
-import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.UsuarioRegisterOutputDto;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.UsuarioLoginRequestDto;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.input.UsuarioRegisterRequestDto;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.UsuarioLoginResponseDto;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.UsuarioRegisterResponseDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.services.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,18 +28,18 @@ public class AuthenticationController {
     @PostMapping("/register")
     @Operation(summary = "Local de Registro do usuario",
             description = "O usuario informa seus dados e após o registro recebe um JSON com nome e email")
-    public ResponseEntity<UsuarioRegisterOutputDto> registrarUsuario(@Valid @RequestBody UsuarioRegisterInputDto registerDto) {
+    public ResponseEntity<UsuarioRegisterResponseDto> registrarUsuario(@Valid @RequestBody UsuarioRegisterRequestDto registerDto) {
         authenticationService.registrar(registerDto);
-        var outputDto = new UsuarioRegisterOutputDto(registerDto.emailUsuario(), registerDto.nomeUsuario());
+        var outputDto = new UsuarioRegisterResponseDto(registerDto.emailUsuario(), registerDto.nomeUsuario());
         return ResponseEntity.status(HttpStatus.CREATED).body(outputDto);
     }
 
     @PostMapping("/login")
     @Operation(summary = "Local de Autenticacao do usuario",
             description = "O usuario efetua login, mediante aos dados válidos ele recebe um JSON com o token e o tipo dele")
-    public ResponseEntity<UsuarioLoginOutputDto> login(@Valid @RequestBody UsuarioLoginInputDto loginDto) {
+    public ResponseEntity<UsuarioLoginResponseDto> login(@Valid @RequestBody UsuarioLoginRequestDto loginDto) {
         String token = authenticationService.autenticar(loginDto);
-        var outputDto = new UsuarioLoginOutputDto(token, "Bearer");
+        var outputDto = new UsuarioLoginResponseDto(token, "Bearer");
         return ResponseEntity.status(HttpStatus.OK).body(outputDto);
     }
 

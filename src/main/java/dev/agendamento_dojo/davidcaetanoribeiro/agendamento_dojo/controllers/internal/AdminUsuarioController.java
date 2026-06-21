@@ -1,6 +1,6 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.controllers.internal;
 
-import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.PromoverProfessorOutputDto;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.PromoverProfessorResponseDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.services.PromoverParaProfessorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,8 +24,8 @@ public class AdminUsuarioController {
     @PatchMapping("/{email}/promover-professor")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Método para promover um usuário a professor")
-    public ResponseEntity<PromoverProfessorOutputDto> promoverUsuarioProfessor(@PathVariable String email) {
-        PromoverProfessorOutputDto professorPromovido = promoverService.execute(email);
+    public ResponseEntity<PromoverProfessorResponseDto> promoverUsuarioProfessor(@PathVariable String email) {
+        PromoverProfessorResponseDto professorPromovido = promoverService.execute(email);
         return ResponseEntity.ok(professorPromovido);
     }
 

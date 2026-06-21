@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
-public record UsuarioRegisterInputDto(
+public record UsuarioRegisterRequestDto(
         @CPF(message = "Insira um CPF válido, sem pontuacao! ") @NotBlank(message = "O campo de CPF está vazio!") String cpfUsuario,
         @NotBlank(message = "O Nome do usuario está vazio!") String nomeUsuario,
         @Email(message = "Informe um email válido!") @NotBlank(message = "O email do usuário está vazio!") String emailUsuario,

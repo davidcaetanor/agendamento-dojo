@@ -34,4 +34,6 @@ public class AulaEntity {
     @Column(name = "capacidade_max_aula")
     private Integer capacidadeMaxAula;
 
+    @Column(name = "data_hora_fim")
+    private LocalDateTime dataHoraFim;
 }

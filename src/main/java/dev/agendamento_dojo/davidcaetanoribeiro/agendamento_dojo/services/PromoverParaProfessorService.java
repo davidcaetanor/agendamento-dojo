@@ -1,6 +1,6 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.services;
 
-import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.PromoverProfessorOutputDto;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.dtos.output.PromoverProfessorResponseDto;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.UsuarioEntity;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.RoleUser;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.event.UsuarioPromovidoProfessorEvent;
@@ -23,7 +23,7 @@ public class PromoverParaProfessorService {
     }
 
     @Transactional
-    public PromoverProfessorOutputDto execute(String email) {
+    public PromoverProfessorResponseDto execute(String email) {
         UsuarioEntity usuarioEncontrado = usuarioRepository.findUsuarioEntitiesByEmailUsuario(email)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Não foi encontrado nenhum usuário com esse email!"));
 
@@ -32,6 +32,6 @@ public class PromoverParaProfessorService {
             eventPublisher.publishEvent(new UsuarioPromovidoProfessorEvent(usuarioEncontrado.getIdUsuario()));
         }
 
-        return new PromoverProfessorOutputDto(usuarioEncontrado.getNomeUsuario(), "Promovido a Professor!");
+        return new PromoverProfessorResponseDto(usuarioEncontrado.getNomeUsuario(), "Promovido a Professor!");
     }
 }
