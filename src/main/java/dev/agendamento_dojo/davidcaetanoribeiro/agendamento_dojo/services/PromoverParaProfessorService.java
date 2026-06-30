@@ -6,9 +6,9 @@ import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.RoleUser;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.event.UsuarioPromovidoProfessorEvent;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.exceptions.UsuarioNaoEncontradoException;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.repositories.UsuarioRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -32,6 +32,6 @@ public class PromoverParaProfessorService {
             eventPublisher.publishEvent(new UsuarioPromovidoProfessorEvent(usuarioEncontrado.getIdUsuario()));
         }
 
-        return new PromoverProfessorResponseDto(usuarioEncontrado.getNomeUsuario(), "Promovido a Professor!");
+        return new PromoverProfessorResponseDto(usuarioEncontrado.getNomeUsuario(), "Promovido a Professor!", usuarioEncontrado.getIdUsuario());
     }
 }

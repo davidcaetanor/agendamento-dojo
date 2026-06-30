@@ -10,12 +10,12 @@ import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.mappers.Usuario
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.repositories.UsuarioRepository;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.security.TokenService;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.security.UserDetailsImpl;
-import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 

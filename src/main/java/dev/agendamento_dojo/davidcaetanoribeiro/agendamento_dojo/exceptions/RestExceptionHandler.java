@@ -79,4 +79,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(errorResponse.status()).body(errorResponse);
     }
 
+    @ExceptionHandler(ConflitoDeHorarioException.class)
+    public ResponseEntity<HttpErrorMessageDto> handleConflitoDeHorarioException(ConflitoDeHorarioException e) {
+        HttpErrorMessageDto errorResponse =
+                new HttpErrorMessageDto(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(errorResponse.status()).body(errorResponse);
+    }
 }

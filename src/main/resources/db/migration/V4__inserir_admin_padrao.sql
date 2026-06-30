@@ -4,7 +4,7 @@ VALUES (
            '00000000000',
            'Mestre Admin',
            'mestreadmin@dojo.com.br',
-           '$2a$12$tdoxR1gkN/bddSTk3GrZRuLRWN1d2P4um2lAGFUtmkHoNcNqpuq1W'
+           '$2a$12$Xq8w/ErkVaI39pDUwEPtEe2Dg1O58H8Lo.Kh7U2Ypqbvgzo5nzQ1e'
 );
 
 

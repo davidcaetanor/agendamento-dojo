@@ -4,10 +4,13 @@ import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.Profes
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.UsuarioEntity;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.RoleUser;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.event.UsuarioPromovidoProfessorEvent;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.exceptions.UsuarioNaoEncontradoException;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.repositories.ProfessorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class ProfessorService {
@@ -29,6 +32,11 @@ public class ProfessorService {
             professor.setUsuario(usuarioEncontrado);
             profRepository.save(professor);
         }
+    }
+
+    public ProfessorEntity buscarEntityProfessorId(UUID idProfessor) {
+        return profRepository.findById(idProfessor)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Professor não encontrado!"));
     }
 
 }
