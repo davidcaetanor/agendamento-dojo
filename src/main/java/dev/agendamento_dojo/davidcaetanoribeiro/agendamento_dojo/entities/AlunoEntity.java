@@ -1,6 +1,7 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities;
 
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.vo.EnderecoVO;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.StatusMatricula;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,4 +40,7 @@ public class AlunoEntity {
     @Embedded
     private EnderecoVO endereco;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_matricula")
+    private StatusMatricula statusMatricula;
 }

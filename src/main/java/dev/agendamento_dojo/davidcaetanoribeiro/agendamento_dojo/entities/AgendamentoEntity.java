@@ -1,5 +1,6 @@
 package dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities;
 
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.StatusAgendamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,4 +28,8 @@ public class AgendamentoEntity {
     @ManyToOne
     @JoinColumn(name = "aluno_id", nullable = false)
     private AlunoEntity alunoAgendado;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_agendamento")
+    private StatusAgendamento statusAgendamento;
 }
