@@ -7,8 +7,11 @@ import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.AlunoE
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.UsuarioEntity;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.entities.vo.EnderecoVO;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.RoleUser;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.enums.StatusMatricula;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.event.UsuarioRegistradoEvent;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.exceptions.AlunoNaoEncontradoException;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.exceptions.CepNaoEncontradoException;
+import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.exceptions.MatriculaInativaException;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.mappers.EnderecoMapper;
 import dev.agendamento_dojo.davidcaetanoribeiro.agendamento_dojo.repositories.AlunoRepository;
 import org.springframework.context.event.EventListener;
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class AlunoService {
@@ -41,16 +46,14 @@ public class AlunoService {
             AlunoEntity aluno = new AlunoEntity();
             aluno.setUsuario(usuarioEncontrado);
             aluno.setDataMatricula(LocalDateTime.now());
+            aluno.setStatusMatricula(StatusMatricula.ATIVA);
             alunoRepository.save(aluno);
         }
     }
 
     @Transactional
     public void atualizarMeuEndereco(AtualizarEnderecoInputDto atualizarEnderecoDto) {
-        String emailLogado = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        AlunoEntity aluno = alunoRepository.findByUsuario_EmailUsuario(emailLogado)
-                .orElseThrow(() -> new UsernameNotFoundException("Não foi localizado nenhum aluno com este email"));
+        AlunoEntity aluno = buscarAlunoLogado();
 
         EnderecoViaCepDto enderecoViaCep = viaCep.buscarEnderecoCep(atualizarEnderecoDto.cep());
 
@@ -62,6 +65,24 @@ public class AlunoService {
 
         aluno.setEndereco(enderecoVO);
         alunoRepository.save(aluno);
+    }
+
+    @Transactional(readOnly = true)
+    public AlunoEntity buscarAlunoId(UUID idAluno) {
+        return alunoRepository.findById(idAluno).orElseThrow(() -> new AlunoNaoEncontradoException("Não foi encontrado nenhum aluno relacionado!"));
+    }
+
+    public void isMatriculaAtiva(StatusMatricula statusMatricula) {
+        if (statusMatricula != null && statusMatricula.equals(StatusMatricula.ATIVA)) {
+            return;
+        }
+        throw new MatriculaInativaException("O Aluno não está com a Matricula Ativa!");
+    }
+
+    @Transactional(readOnly = true)
+    public AlunoEntity buscarAlunoLogado() {
+        String emailLogado = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
+        return alunoRepository.findByUsuario_EmailUsuario(emailLogado).orElseThrow(() -> new UsernameNotFoundException("Não foi localizado nenhum aluno com este email"));
     }
 
 }

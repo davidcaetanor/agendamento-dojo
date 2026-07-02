@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/internal/admin/usuarios")
-@Tag(name = "Rota interna para Admin")
+@Tag(name = "Rota de Admin", description = "Rota exclusiva para promoção efetuada pelo administrador")
 public class AdminUsuarioController {
     private final PromoverParaProfessorService promoverService;
 

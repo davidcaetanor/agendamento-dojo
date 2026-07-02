@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/alunos")
-@Tag(name = "Rota dos Alunos")
+@Tag(name = "Rota de Alunos", description = "Rota de visualização e Manipulação de Alunos")
 public class AlunoController {
     private final AlunoService alunoService;
 

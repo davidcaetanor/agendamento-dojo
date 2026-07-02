@@ -82,7 +82,49 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ConflitoDeHorarioException.class)
     public ResponseEntity<HttpErrorMessageDto> handleConflitoDeHorarioException(ConflitoDeHorarioException e) {
         HttpErrorMessageDto errorResponse =
-                new HttpErrorMessageDto(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
+                new HttpErrorMessageDto(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(errorResponse.status()).body(errorResponse);
+    }
+
+    @ExceptionHandler(AulaNaoEncontradaException.class)
+    public ResponseEntity<HttpErrorMessageDto> handleAulaNaoEncontradaException(AulaNaoEncontradaException e) {
+        HttpErrorMessageDto errorResponse =
+                new HttpErrorMessageDto(HttpStatus.NOT_FOUND, e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(errorResponse.status()).body(errorResponse);
+    }
+
+    @ExceptionHandler(AlunoNaoEncontradoException.class)
+    public ResponseEntity<HttpErrorMessageDto> handleAlunoNaoEncontradoException(AlunoNaoEncontradoException e) {
+        HttpErrorMessageDto errorResponse =
+                new HttpErrorMessageDto(HttpStatus.NOT_FOUND, e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(errorResponse.status()).body(errorResponse);
+    }
+
+    @ExceptionHandler(AgendamentoLotadoException.class)
+    public ResponseEntity<HttpErrorMessageDto> handleAgendamentoLotadoException(AgendamentoLotadoException e) {
+        HttpErrorMessageDto errorResponse =
+                new HttpErrorMessageDto(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(errorResponse.status()).body(errorResponse);
+    }
+
+    @ExceptionHandler(MatriculaInativaException.class)
+    public ResponseEntity<HttpErrorMessageDto> handleMatriculaInativaException(MatriculaInativaException e) {
+        HttpErrorMessageDto errorResponse =
+                new HttpErrorMessageDto(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(errorResponse.status()).body(errorResponse);
+    }
+
+    @ExceptionHandler(AgendamentoDuplicadoException.class)
+    public ResponseEntity<HttpErrorMessageDto> handleAgendamentoDuplicadoException(AgendamentoDuplicadoException e) {
+        HttpErrorMessageDto errorResponse =
+                new HttpErrorMessageDto(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(errorResponse.status()).body(errorResponse);
+    }
+
+    @ExceptionHandler(AulaExpiradaException.class)
+    public ResponseEntity<HttpErrorMessageDto> handleAulaExpiradaExceptionException(AulaExpiradaException e) {
+        HttpErrorMessageDto errorResponse =
+                new HttpErrorMessageDto(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(errorResponse.status()).body(errorResponse);
     }
 }
