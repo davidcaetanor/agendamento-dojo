@@ -1,32 +1,28 @@
-# Agendamento Dojo API
+### Agendamento Dojo API
+API REST para gerenciamento de matrículas, aulas e agendamentos de um Dojo.
 
-API desenvolvida para o gerenciamento de matrículas, aulas e agendamentos de um Dojo. 
+#### Tecnologias
+- Java 21, Spring Boot 4
+- Spring Security + JWT (Auth0 java-jwt)
+- Spring Data JPA/Hibernate, PostgreSQL
+- Flyway, MapStruct, Lombok
+- Springdoc OpenAPI (Swagger UI), Spring Cloud OpenFeign, Maven
 
-## Tecnologias Utilizadas
+#### Arquitetura/Padrões
+- DTOs para entrada/saída
+- Eventos de domínio para criação de perfis (Aluno/Professor)
+- Tratamento global de erros com @RestControllerAdvice
 
-* Java
-* Spring Boot 3
-* Spring Security
-* JSON Web Token (Auth0 JWT)
-* Spring Data JPA e Hibernate
-* Bean Validation (Hibernate Validator)
-* Springdoc OpenAPI (Swagger UI)
-* Lombok
-* Maven
+#### Funcionalidades
+- Registro de usuários com validação de CPF e e-mail
+- Autenticação JWT e emissão de token
+- Endpoints para alunos, aulas e agendamentos
 
-## Arquitetura e Padrões Aplicados
+#### Como executar
+Requisitos: Java 21, Maven, PostgreSQL.
+Variáveis de ambiente obrigatórias:
+- DB_URL
+- DB_USER, DB_PASS
+- JWT_SECRET
 
-* **Data Transfer Objects (DTO):** Isolamento entre as entidades persistidas e as requesicoes da API.
-* **Spring Events:** Utilizado para criação de perfis (de Aluno e Professor), ocorre via eventos disparados pela AuthService.
-* **Global Exception Handling:** Centralização de erros através do `@RestControllerAdvice`, padronizando as saídas de erro da API.
-
-## Funcionalidades Atuais
-
-* Registro seguro de usuários com validação de CPF e E-mail.
-* Autenticação baseada em JWT, retornando tokens.
-
-## Documentação da API
-
-Com a aplicação em execução, a documentação fica disponível no navegador através do endereço:
-
-`http://localhost:8080/swagger-ui.html`
+Swagger UI: http://localhost:8080/swagger-ui.html
